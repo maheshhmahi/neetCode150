@@ -1,0 +1,40 @@
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        Map<Character, Integer> myMap = new HashMap<Character, Integer>();
+        if(s.length() != t.length()) {
+            return false;
+        }
+        for(int i=0; i<s.length(); i++) {
+            myMap.put(s.charAt(i), myMap.getOrDefault(s.charAt(i), 0) + 1 );
+        }
+        for(int i=0; i<t.length(); i++) {
+            if(myMap.containsKey(t.charAt(i)) && myMap.get(t.charAt(i)) != 0) {
+                myMap.put(t.charAt(i), myMap.get(t.charAt(i)) - 1);
+            } else {
+                return false;
+            }
+        }
+        return true;
+
+        // Another Solution
+        
+        // Map<Character, Integer> myMap = new HashMap<Character, Integer>();
+        // if(s.length() != t.length()) {
+        //     return false;
+        // }
+
+        // for(int i=0 ; i<s.length(); i++) {
+        //     myMap.put(s.charAt(i), myMap.getOrDefault(s.charAt(i), 0) + 1);
+        // }
+
+        // for(int i=0 ; i<t.length(); i++) {
+        //     myMap.put(t.charAt(i), myMap.getOrDefault(t.charAt(i), 0) - 1);
+        // }
+        // for(int val : myMap.values()) {
+        //     if(val!= 0) {
+        //         return false;
+        //     }
+        // }
+        // return true;
+    }
+}
