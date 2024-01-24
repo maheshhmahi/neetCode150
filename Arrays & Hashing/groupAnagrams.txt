@@ -1,0 +1,29 @@
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+       Map<String, List<String>> map = new HashMap<>();
+       for(String s: strs) {
+           char[] wordCharArray = s.toCharArray();
+           Arrays.sort(wordCharArray);
+           String sortedString = new String(wordCharArray);
+           if(!map.containsKey(sortedString)) {
+               map.put(sortedString, new ArrayList<>());
+           }
+           map.get(sortedString).add(s);
+      }
+       return new ArrayList(map.values());
+    }
+}
+
+
+Example 1:
+
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+Example 2:
+
+Input: strs = [""]
+Output: [[""]]
+Example 3:
+
+Input: strs = ["a"]
+Output: [["a"]]
