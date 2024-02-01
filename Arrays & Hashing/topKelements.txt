@@ -1,0 +1,33 @@
+class Solution {
+    
+    class Node {
+        int key, value;
+        Node(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> myMap = new HashMap<>();
+        for(int i=0; i<nums.length; i++) {
+            myMap.put(nums[i], myMap.getOrDefault(nums[i], 0) + 1);
+        }
+        
+       int[] res = new int[k];
+
+       PriorityQueue<Node> maxHeap = new PriorityQueue<Node>((a,b) -> Integer.compare(b.value, a.value));
+
+        for(Map.Entry<Integer, Integer> map : myMap.entrySet() ) {
+            Node node = new Node(map.getKey(), map.getValue());
+            maxHeap.add(node);
+        }
+
+        int count=0;
+        while(k-->0) {
+            res[count++] = maxHeap.poll().key;
+        }
+        return res;
+
+    }
+}
