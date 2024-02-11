@@ -1,0 +1,32 @@
+//done using recursion
+
+class Solution {
+
+    public void addParanthesis(List<String> res, int openN, int closeN, String str, int n) {
+        if(str.length() == 2*n) {
+            res.add(str);
+            return;
+        }
+        if(openN < n) {
+            addParanthesis(res, openN + 1, closeN, str + "(", n);
+        }
+        if(closeN < openN) {
+            addParanthesis(res, openN, closeN + 1, str + ")", n);
+        }
+    }
+
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        addParanthesis(res, 0, 0, "", n);
+        return res;
+    }
+}
+
+Example 1:
+
+Input: n = 3
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+Example 2:
+
+Input: n = 1
+Output: ["()"]
