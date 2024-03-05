@@ -103,3 +103,13 @@ Input: board =
 ,[".",".",".",".","8",".",".","7","9"]]
 Output: false
 Explanation: Same as Example 1, except with the 5 in the top left corner being modified to 8. Since there are two 8's in the top left 3x3 sub-box, it is invalid.
+
+
+
+//approach
+
+three validations. i.e validateColumns, validateRows and validate each cubes.
+
+validateColumns and validateRows are straight forward. loop thorugh each of the value, check if it exists in set, if it exists return false.
+
+for validating cubes, divide the indicies by 3. i/3 and j/3. and validate it using HashSet
