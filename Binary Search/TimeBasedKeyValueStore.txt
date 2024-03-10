@@ -1,0 +1,78 @@
+class Value {
+    String value;
+    int timestamp;
+
+    public Value(String value, int timestamp) {
+        this.value = value;
+        this.timestamp = timestamp;
+    }
+
+    public String getValue() {
+        return value;
+    }
+    public int getTime() {
+        return timestamp;
+    }
+}
+
+class TimeMap {
+
+    Map<String, List<Value>> map;
+    public TimeMap() {
+        map = new HashMap<>();
+    }
+    
+    public void set(String key, String value, int timestamp) {
+        if(!map.containsKey(key)) {
+            map.put(key, new ArrayList<>());
+        }
+        map.get(key).add(new Value(value, timestamp));
+    }
+    
+    public String get(String key, int timestamp) {
+        List<Value> values = map.get(key);
+        String res = "";
+        if(values != null) {
+            int l = 0, h = values.size() - 1;
+
+            while(l<=h) {
+                int m = (l + h) / 2;
+                if(values.get(m).getTime() <= timestamp) {
+                    res = values.get(m).getValue();
+                    l = m + 1;
+                } 
+                else {
+                    h = m - 1;
+                }
+            }
+        }
+        return res;
+
+    }
+}
+
+/**
+ * Your TimeMap object will be instantiated and called as such:
+ * TimeMap obj = new TimeMap();
+ * obj.set(key,value,timestamp);
+ * String param_2 = obj.get(key,timestamp);
+ */
+
+
+
+Example 1:
+
+Input
+["TimeMap", "set", "get", "get", "set", "get", "get"]
+[[], ["foo", "bar", 1], ["foo", 1], ["foo", 3], ["foo", "bar2", 4], ["foo", 4], ["foo", 5]]
+Output
+[null, null, "bar", "bar", null, "bar2", "bar2"]
+
+Explanation
+TimeMap timeMap = new TimeMap();
+timeMap.set("foo", "bar", 1);  // store the key "foo" and value "bar" along with timestamp = 1.
+timeMap.get("foo", 1);         // return "bar"
+timeMap.get("foo", 3);         // return "bar", since there is no value corresponding to foo at timestamp 3 and timestamp 2, then the only value is at timestamp 1 is "bar".
+timeMap.set("foo", "bar2", 4); // store the key "foo" and value "bar2" along with timestamp = 4.
+timeMap.get("foo", 4);         // return "bar2"
+timeMap.get("foo", 5);         // return "bar2"

@@ -47,7 +47,7 @@ maxRight:      [3,3,3,3,3,2,3,2,2,2,1,0]
 
 now at each index find min(maxLeft, maxRight)
 
-min(L,R):      [0,1,1,1,2,2,2,2,2,2,1,0]
+min(L,R):      [0,0,1,1,2,2,2,2,2,2,1,0]
 
 now at each index using the formula min(L,R) – curr[i] >=0 then add the value if not put 0;
 
