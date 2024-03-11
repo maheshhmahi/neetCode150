@@ -1,0 +1,68 @@
+class Solution {
+
+    public int getCounts(Map<Character, Integer> m1, Map<Character, Integer> m2) {
+        int count = 26;
+        for(char i='a'; i<='z'; i++) {
+            int val1 = m1.get(i);
+            int val2 = m2.get(i);
+            count -= Math.abs(val1 - val2);
+        }
+        return count;
+    }
+
+    public boolean checkInclusion(String s1, String s2) {
+        if(s1.length() > s2.length()) {
+            return false;
+        }
+        Map<Character, Integer> m1 = new HashMap<>();
+        Map<Character, Integer> m2 = new HashMap<>();
+        for(char i='a'; i<='z'; i++) {
+            m1.put(i, 0);
+            m2.put(i, 0);
+        }
+        for(int i=0; i<s1.length(); i++) {
+            m1.put(s1.charAt(i), m1.getOrDefault(s1.charAt(i), 0) + 1);
+            m2.put(s2.charAt(i), m2.getOrDefault(s2.charAt(i), 0) + 1);
+        }
+
+        int l=0;
+
+        for(int r = s1.length()-1; r<s2.length(); r++) {
+            if(getCounts(m1, m2) == 26) {
+                return true;
+            }
+            m2.put(s2.charAt(l), m2.get(s2.charAt(l)) - 1);
+            if(r+1 < s2.length())
+                m2.put(s2.charAt(r+1), m2.get(s2.charAt(r+1)) + 1);
+            l++;            
+        }
+
+        
+        return false;
+    }
+}
+
+Example 1:
+
+Input: s1 = "ab", s2 = "eidbaooo"
+Output: true
+Explanation: s2 contains one permutation of s1 ("ba").
+Example 2:
+
+Input: s1 = "ab", s2 = "eidboaoo"
+Output: false
+
+
+//Explanation
+
+1. I first created two maps, initliazed a-z with counts = 0;
+
+2. I set the count of chars of s1 in the first map m1. 
+
+3. for the window of s1 length, I calculated the counts of each character and put into second map m2.
+
+4. now left =0 and right goes from s1.length to end of string 2.
+
+5. check if the matches of m2 and m1 are 26 (26 means that string 2 has a permutation of string 1 present)
+
+6. if it is not present, then move the window by 1. while moving, reduce the count of left char and add count if right char
