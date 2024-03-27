@@ -15,6 +15,23 @@ class Solution {
 }
 
 
+class Solution {
+    public int maxProfit(int[] prices) {
+        int maxProfit = 0;
+        int currMin = prices[0];
+        for(int i=1; i<prices.length; i++) {
+            int currProfit = prices[i] - currMin;
+            if(currProfit > maxProfit) {
+                maxProfit = currProfit;
+            }
+            if(prices[i] < currMin) {
+                currMin = prices[i];
+            }
+        }
+        return maxProfit;
+    }
+}
+
 Example 1:
 
 Input: prices = [7,1,5,3,6,4]
