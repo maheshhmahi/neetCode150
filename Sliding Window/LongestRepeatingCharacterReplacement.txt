@@ -1,0 +1,64 @@
+class Solution {
+
+    public Character fetchMostFreqChar(Map<Character, Integer> frequencies) {
+        Character maxCh = '\0';
+        int maxVal = 0;
+        for(Map.Entry<Character, Integer> f : frequencies.entrySet()) {
+            if(f.getValue() > maxVal) {
+                maxVal = f.getValue();
+                maxCh = f.getKey();
+            }
+        }
+        return maxCh;
+    }
+
+    public int characterReplacement(String s, int k) {
+        Map<Character, Integer> frequencies = new HashMap<>();
+        int l = 0;
+        int res = 0;
+        
+        for(int r=0; r<s.length(); r++) {
+            Character ch = s.charAt(r);
+    
+            frequencies.put(ch, frequencies.getOrDefault(ch, 0) + 1);
+
+            Character maxCh = fetchMostFreqChar(frequencies);
+        
+            int subValue = (r-l+1) - frequencies.get(fetchMostFreqChar(frequencies));
+            while((r-l+1) - frequencies.get(fetchMostFreqChar(frequencies)) > k ) {
+                frequencies.put(s.charAt(l), frequencies.get(s.charAt(l)) - 1);
+                l += 1;
+            }
+
+            res = Math.max(res, r-l+1);
+        }
+        return res;
+    }
+}
+
+Example 1:
+
+Input: s = "ABAB", k = 2
+Output: 4
+Explanation: Replace the two 'A's with two 'B's or vice versa.
+Example 2:
+
+Input: s = "AABABBA", k = 1
+Output: 4
+Explanation: Replace the one 'A' in the middle with 'B' and form "AABBBBA".
+The substring "BBBB" has the longest repeating letters, which is 4.
+There may exists other ways to achieve this answer too.
+ 
+
+Explanation
+
+1. I make use of sliding window method. 
+2. Initially l =0, r starts from 0 and goes to n
+
+3. each step, I update the hashmap and put the frequencies of that Character.
+
+4. I will check if the length till now(r-l+1) subtracted by the max of frequency elment if it is > k, then we cannot replace those k values. so I will move the l pointer,
+
+So basically, if k=1 and AABA -> l=0, r=3. r-l+1 = 4, and now 4-3(no of A's) = 1 which is equal to or less than k. So we can replace k by A and get 4 
+
+if k=1 and AABAB -> l=0, r=4. r-l+1 = 5 and now 5-3(no of A's) = 2 > k, so we can't replace 2 B's. So that's the logic
